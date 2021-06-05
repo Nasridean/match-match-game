@@ -30,6 +30,8 @@
         color: white;
         font-weight: 500;
         opacity: 0.7;
+        font-size: 12px;
+        text-decoration: none;
     }
     &__icon {
         display: block;
@@ -39,6 +41,7 @@
         border-radius: 50%;
         font-style: normal;
         color: $primary;
+        text-align: center;
         &--about {
             font-weight: 700;
             font-size: 16px;
@@ -48,11 +51,13 @@
             background-color: transparent;
             background-size: contain;
         }
+        &--game-settings {
+          background-image: url('icons/settings.svg');
+          background-position: center;
+          background-repeat: no-repeat;
+        }
     }
-    &__game-settings {
-        display: flex;
-        
-    }
+    
     &__button {
         border: none;
         padding: 10px 16px;
