@@ -321,5 +321,11 @@ body {
   right: 10px;
   top: 10px;
 }
+.correct .result--incorrect::before {
+  background: red;
+}
+.correct .result--incorrect::after {
+  background-image: url("icons/incorrect.svg");
+}
 
 /*# sourceMappingURL=styles.css.map */
