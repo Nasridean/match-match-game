@@ -1,4 +1,5 @@
 import { About } from "./components/about";
+import { GameSettings } from "./components/game-settings";
 import { Game } from "./components/game/game";
 import { Header } from "./components/header/header";
 import { ImageCategoryModel } from "./models/image-category-models";
@@ -8,6 +9,7 @@ export class App {
   private readonly header: Header;
   private readonly mainElement: HTMLElement;
   private readonly about: About;
+  private readonly gameSettings: GameSettings;
 
   constructor(private readonly rootElement: HTMLElement) {
     this.header = new Header();
@@ -15,6 +17,7 @@ export class App {
     this.mainElement.classList.add('main');
     this.game = new Game();
     this.about = new About();
+    this.gameSettings = new GameSettings()
     this.rootElement.appendChild(this.header.element);
     this.rootElement.appendChild(this.mainElement);
     this.renderMainContent();
@@ -26,7 +29,9 @@ export class App {
       case '/about':
         this.mainElement.appendChild(this.about.element)
         break;
-    
+      case '/game-settings':
+        this.mainElement.appendChild(this.gameSettings.element);
+        break;
       default:
         this.mainElement.appendChild(this.game.element);
         break;
