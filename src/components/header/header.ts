@@ -1,4 +1,5 @@
 import { BaseComponent } from "../base-component";
+import { Link } from "../link";
 
 export class Header extends BaseComponent {
   constructor() {
@@ -9,37 +10,26 @@ export class Header extends BaseComponent {
         <p>match</p>
         <p>match</p>
       </div>
-      <div class="header__links">
-        <div class="header__link">
-          <a href="../index.html" class="header__link-button header__link-button--about">
-            <i class="header__icon--about header__icon">?</i>
-            About game
-          </a>
-        </div>
-        <div class="header__link">
-          <a href="#" class="header__link-button header__link-button--score active">
-            <i class="header__icon--score header__icon"></i>
-            Best score
-          </a>
-        </div>
-        <div class="header__link">
-          <a href="settings.html" class="header__link-button header__link-button--game-settings">
-            <i class="header__icon--game-settings header__icon"></i>
-            Game Settings
-          </a>
-        </div>
-      </div>
+      <nav class="header__links">
+        
+      </nav>
     </div>
     
     <button class="header__button" id="button">Register new player</button>
     `;
-    if (this.element.firstElementChild)
-    this.element.firstElementChild.innerHTML = `
-      <div class="header__logo">
-        <p>match</p>
-        <p>match</p>
-      </div>
-      <div class="header__links"></div>`;
-    
+      this.createLinks()
+      window.addEventListener('locationchange', () => {
+        this.createLinks();
+        document.getElementById(window.location.pathname.slice(1))?.classList.add('header__link-button--active');
+
+      })
+    }
+    createLinks() {
+      if (this.element.firstElementChild?.lastElementChild) {
+        this.element.firstElementChild.lastElementChild.innerHTML = '';
+        this.element.firstElementChild.lastElementChild.appendChild(new Link(['About game', '?'], 'about').element);
+        this.element.firstElementChild.lastElementChild.appendChild(new Link(['Best scores', ''], 'score').element);
+        this.element.firstElementChild.lastElementChild.appendChild(new Link(['Game settings', ''], 'game-settings').element);
+    }
   }
 }

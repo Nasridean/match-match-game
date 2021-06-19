@@ -55,6 +55,7 @@ export class Game extends BaseComponent {
     }
     this.activeCard.markAsCorrect();
     card.markAsCorrect();
-    
+    this.activeCard = undefined;
+    this.isAnimation = false;
   }
 }

@@ -1,3 +1,4 @@
+import { About } from "./components/about";
 import { Game } from "./components/game/game";
 import { Header } from "./components/header/header";
 import { ImageCategoryModel } from "./models/image-category-models";
@@ -5,16 +6,31 @@ import { ImageCategoryModel } from "./models/image-category-models";
 export class App {
   private readonly game: Game;
   private readonly header: Header;
-  private readonly main: HTMLElement;
+  private readonly mainElement: HTMLElement;
+  private readonly about: About;
 
   constructor(private readonly rootElement: HTMLElement) {
     this.header = new Header();
-    this.main = document.createElement('main');
-    this.main.classList.add('main');
+    this.mainElement = document.createElement('main');
+    this.mainElement.classList.add('main');
     this.game = new Game();
+    this.about = new About();
     this.rootElement.appendChild(this.header.element);
-    this.rootElement.appendChild(this.main);
-    this.main.appendChild(this.game.element);
+    this.rootElement.appendChild(this.mainElement);
+    this.renderMainContent();
+    window.addEventListener('locationchange', () => this.renderMainContent());
+  }
+  renderMainContent() {
+    this.mainElement.innerHTML = '';
+    switch (window.location.pathname) {
+      case '/about':
+        this.mainElement.appendChild(this.about.element)
+        break;
+    
+      default:
+        this.mainElement.appendChild(this.game.element);
+        break;
+    }
   }
 
   async start() {
