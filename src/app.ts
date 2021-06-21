@@ -1,4 +1,5 @@
 import { About } from "./components/about";
+import { Database } from "./components/database";
 import { GameSettings } from "./components/game-settings";
 import { Game } from "./components/game/game";
 import { Header } from "./components/header/header";
@@ -10,8 +11,10 @@ export class App {
   private readonly mainElement: HTMLElement;
   private readonly about: About;
   private readonly gameSettings: GameSettings;
+  IDBTransaction: Database;
 
   constructor(private readonly rootElement: HTMLElement) {
+    this.IDBTransaction = new Database();
     this.header = new Header();
     this.mainElement = document.createElement('main');
     this.mainElement.classList.add('main');
@@ -28,12 +31,15 @@ export class App {
     switch (window.location.pathname) {
       case '/about':
         this.mainElement.appendChild(this.about.element)
+        window.history.replaceState({}, '', '/');
         break;
       case '/game-settings':
         this.mainElement.appendChild(this.gameSettings.element);
+        window.history.replaceState({}, '', '/');
         break;
       default:
         this.mainElement.appendChild(this.game.element);
+        window.history.replaceState({}, '', '/');
         break;
     }
   }

@@ -1,16 +1,20 @@
 import { BaseComponent } from "../base-component";
 import { Card } from "../card/card";
 import { CardsField } from "../cards-field/cards-field";
+import { Timer } from "../Timer";
 
 export class Game extends BaseComponent {
   private readonly cardsField: CardsField;
 
   private activeCard?: Card;
   private isAnimation: boolean = false;
+  timer: Timer;
 
   constructor() {
     super('div', ['main__container', 'main__container--game']);
+    this.timer = new Timer();
     this.cardsField = new CardsField();
+    this.element.appendChild(this.timer.element);
     this.element.appendChild(this.cardsField.element);
     
   }

@@ -1,27 +1,37 @@
 import { BaseComponent } from "./base-component";
 
 export class GameSettings extends BaseComponent {
+  form: FormData;
+
   constructor() {
-    super('div', ['main__container', 'main__container--settings']);
+    super('form', ['main__container', 'main__container--settings']);
     this.element.innerHTML = `
-      <div class="main__select-block">
-        <h2 class="main__title">Game cards</h2>
+      <fieldset class="main__select-block">
+        <legend class="main__title">Game cards</legend>
         <select name="type" id="cards-type" class="main__select">
           <option value="cars" selected>select game cards type</option>
           <option value="cars" selected>Cars</option>
           <option value="fruits" selected>Fruits</option>
         </select>
-      </div>
+      </fieldset>
       
-      <div class="main__select-block">
-        <h2 class="main__title">Difficulty</h2>
+      <fieldset class="main__select-block">
+        <legend class="main__title">Difficulty</legend>
         <select name="difficulty" class="main__select">
           <option value="8" selected>select game type</option>
           <option value="8" selected>4x4</option>
           <option value="18" selected>6x6</option>
           <option value="32" selected>8x8</option>
         </select>
-      </div>
-    `
-  }
+      </fieldset>
+      <input type="submit" name="submit" value="Save" class="main__save-button">
+    `;
+    this.form = new FormData((<HTMLFormElement>this.element));
+    this.element.addEventListener('submit', (e) => {
+      e.preventDefault();
+      this.form.get('type');
+      this.form.get('difficulty');
+    })
 }
+  }
+  
