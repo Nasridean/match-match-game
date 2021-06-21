@@ -1,4 +1,4 @@
-import { BaseComponent } from "./base-component";
+import { BaseComponent } from './base-component';
 
 export class About extends BaseComponent {
   constructor() {
@@ -20,6 +20,6 @@ export class About extends BaseComponent {
         </div>
         <img src="image 3.png" alt="cards" class="main__img main__img--cards">
       </div>
-    `
+    `;
   }
 }

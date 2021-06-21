@@ -1,11 +1,10 @@
-import { BaseComponent } from "../base-component";
+import { BaseComponent } from '../base-component';
 
 export class Card extends BaseComponent {
   isFlipped: boolean = false;
 
   constructor(readonly image: string) {
     super('div', ['main__flip-card']);
-
 
     this.element.innerHTML = `
       <div class="main__flip-card-inner" id="card-inner">
@@ -23,7 +22,7 @@ export class Card extends BaseComponent {
     this.isFlipped = false;
     this.element.classList.remove('main__flip-card--flipped');
   }
-  
+
   markAsCorrect() {
     this.element.classList.add('main__flip-card--correct');
   }

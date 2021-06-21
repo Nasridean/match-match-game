@@ -1,23 +1,30 @@
 export class Database {
-  IDBTransaction: Promise<IDBTransaction>;
-
-  constructor() {
-    this.IDBTransaction = new Promise(function (resolve, reject) {
-      let open: IDBOpenDBRequest = window.indexedDB.open('Nasridean',1);
-      
-      open.onsuccess = function() {
-        const db: IDBDatabase = open.result;
-        const transaction = db.transaction("user", "readwrite");
-        resolve(transaction);
-  
-        transaction.onerror = function(event) { reject(event) }
-      };
-      open.onerror = function(event) { reject(event) }
-      open.onupgradeneeded = (e) => open.result.createObjectStore('user');
-    })
-    
+  private transaction?: IDBTransaction;
+ 
+  /* constructor() {
+    let open: IDBOpenDBRequest =  window.indexedDB.open('Nasridean',1); 
+    open.onsuccess = async () => {
+      const db: IDBDatabase = open.result;
+      this.transaction = db.transaction("user", "readwrite");  
+      this.transaction.onerror = () => console.log("Error creating/accessing IndexedDB database");
+    };
+    open.onerror = () => console.log("Error creating/accessing IndexedDB database");
+    open.onupgradeneeded = (e) => open.result.createObjectStore('user');
     //this.request.transaction?.objectStore('user').put('hello', 'key');
     //this.transaction.objectStore('user').get('key').onerror = () => console.log('got that!')
+  } */
+  managaDatabase(data: {data: string, key: string}, key: string) {
+    let open: IDBOpenDBRequest =  window.indexedDB.open('Nasridean',1); 
+    open.onsuccess = async () => {
+      const db: IDBDatabase = open.result;
+      this.transaction = db.transaction("users", "readwrite");  
+      this.transaction?.objectStore('users').put(data, key);
+      this.transaction.onerror = () => console.log("Error creating/accessing IndexedDB database");
+    };
+    open.onerror = () => console.log("Error creating/accessing IndexedDB database");
+    open.onupgradeneeded = (e) => open.result.createObjectStore('users');
+    /* setTimeout(() => console.log(this.transaction), 1000)
+    this.transaction?.objectStore('user').put(data, 'key'); */
   }
 
   /* async returnDatabase(request:IDBOpenDBRequest) {

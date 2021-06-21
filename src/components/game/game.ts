@@ -1,7 +1,7 @@
 import { BaseComponent } from "../base-component";
 import { Card } from "../card/card";
 import { CardsField } from "../cards-field/cards-field";
-import { Timer } from "../Timer";
+import { Timer } from "../timer";
 
 export class Game extends BaseComponent {
   private readonly cardsField: CardsField;
