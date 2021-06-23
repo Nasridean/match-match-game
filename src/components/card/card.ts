@@ -1,7 +1,7 @@
 import { BaseComponent } from '../base-component';
 
 export class Card extends BaseComponent {
-  isFlipped: boolean = false;
+  isFlipped = false;
 
   constructor(readonly image: string) {
     super('div', ['main__flip-card']);

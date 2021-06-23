@@ -1,4 +1,4 @@
-import { BaseComponent } from "./base-component";
+import { BaseComponent } from './base-component';
 
 export class Link extends BaseComponent {
   constructor(private readonly innerText: string[], BEMModificator: string) {
@@ -8,10 +8,10 @@ export class Link extends BaseComponent {
       <i class="header__icon--${BEMModificator} header__icon">${innerText[1]}</i>
       ${innerText[0]}
     </button>
-    `
-    this.element.firstElementChild?.addEventListener('click', (e) => {
+    `;
+    this.element.firstElementChild?.addEventListener('click', () => {
       window.history.pushState({}, '', `/${BEMModificator}`);
-      window.dispatchEvent(new Event('locationchange'))
+      window.dispatchEvent(new Event('locationchange'));
     });
   }
 }

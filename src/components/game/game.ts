@@ -1,65 +1,105 @@
-import { BaseComponent } from "../base-component";
-import { Card } from "../card/card";
-import { CardsField } from "../cards-field/cards-field";
-import { Timer } from "../timer";
+import { BaseComponent } from '../base-component';
+import { Card } from '../card/card';
+import { CardsField } from '../cards-field/cards-field';
+import { CongratsModal } from '../congrats-modal';
+import { Timer } from '../timer';
 
 export class Game extends BaseComponent {
   private readonly cardsField: CardsField;
 
+  score: number = 0;
+
+  matchCount: number = 0;
+
+  private images: string[] = [];
+
   private activeCard?: Card;
-  private isAnimation: boolean = false;
+
+  private isAnimation = false;
+
+  private isPaused = false;
+
   timer: Timer;
+
+  congratsModal: CongratsModal;
+
+  private readonly pauseOrResumeButton: HTMLElement;
 
   constructor() {
     super('div', ['main__container', 'main__container--game']);
+    this.element.innerHTML = '<button class="main__pause-resume-button" style="display: none">pause game</button>';
+    this.pauseOrResumeButton = (<HTMLElement>this.element.firstElementChild);
     this.timer = new Timer();
-    this.cardsField = new CardsField();
+    this.cardsField = new CardsField(this.timer, this.pauseOrResumeButton);
+    this.congratsModal = new CongratsModal();
     this.element.appendChild(this.timer.element);
     this.element.appendChild(this.cardsField.element);
-    
+    this.element.appendChild(this.congratsModal.element);
+    this.element.firstElementChild?.addEventListener('click', this.pauseOrResumeGame)
   }
 
   newGame(images: string[]) {
+    this.images = images;
     this.cardsField.clear();
     const cards = images
       .concat(images)
       .map((url) => new Card(url))
-      .sort(() => Math.random() - .5);
+      .sort(() => Math.random() - 0.5);
 
     cards.forEach(
-      (card) => card.element.addEventListener('click', () => this.cardHandler(card))
-      );
+      (card) => card.element.addEventListener('click', () => this.cardHandler(card)),
+    );
 
     this.cardsField.addCards(cards);
   }
 
+  pauseOrResumeGame = (e: Event) => {
+    if (this.isPaused) {
+      (<HTMLElement>e.target).textContent = 'pause game';
+      this.isPaused = false;
+      this.timer.start();
+      return;
+    }
+    (<HTMLElement>e.target).textContent = 'resume game';
+    this.isPaused = true;
+    this.timer.stop();
+  }
+
   private cardHandler(card: Card) {
-    if (this.isAnimation) return;
+    if (this.isAnimation || this.isPaused) return;
     if (!card.isFlipped) return;
     this.isAnimation = true;
     card.flipToFront();
-    if(!this.activeCard) {
+    if (!this.activeCard) {
       this.activeCard = card;
       this.isAnimation = false;
       return;
-    } else {
-      if (this.activeCard.image != card.image) {
-        this.activeCard.markAsIncorrect();
-        card.markAsIncorrect();
-        setTimeout(() => {
-          this.activeCard?.flipToBack();
-          this.activeCard?.unmark();
-          card.flipToBack();
-          card.unmark();
-          this.activeCard = undefined;
-          this.isAnimation = false;
-        }, 1000)
-        return;
-      }
     }
+    if (this.activeCard.image !== card.image) {
+      this.score--;
+      this.activeCard.markAsIncorrect();
+      card.markAsIncorrect();
+      setTimeout(() => {
+        this.activeCard?.flipToBack();
+        this.activeCard?.unmark();
+        card.flipToBack();
+        card.unmark();
+        this.activeCard = undefined;
+        this.isAnimation = false;
+      }, 1000);
+      return;
+    }
+    this.score++;
+    this.matchCount++;
     this.activeCard.markAsCorrect();
     card.markAsCorrect();
     this.activeCard = undefined;
     this.isAnimation = false;
+    if (this.matchCount === this.images.length) {
+      this.timer.stop();
+      this.score = (this.score * 100) - (this.timer.minutes * 60 + this.timer.seconds) * 10;
+      this.score = this.score < 0 ? 0 : this.score;
+      this.congratsModal.open([this.score, this.timer.minutes, this.timer.seconds]);
+    }
   }
 }
