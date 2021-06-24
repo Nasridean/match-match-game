@@ -5,7 +5,7 @@ export class Timer extends BaseComponent {
 
   public seconds = 0;
 
-  private interval: number = 0;
+  private interval = 0;
 
   constructor() {
     super('div', ['main__time']);

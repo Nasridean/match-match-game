@@ -7,9 +7,9 @@ import { Timer } from '../timer';
 export class Game extends BaseComponent {
   private readonly cardsField: CardsField;
 
-  score: number = 0;
+  score = 0;
 
-  matchCount: number = 0;
+  matchCount = 0;
 
   private images: string[] = [];
 
@@ -28,14 +28,14 @@ export class Game extends BaseComponent {
   constructor() {
     super('div', ['main__container', 'main__container--game']);
     this.element.innerHTML = '<button class="main__pause-resume-button" style="display: none">pause game</button>';
-    this.pauseOrResumeButton = (<HTMLElement>this.element.firstElementChild);
+    this.pauseOrResumeButton = (<HTMLElement> this.element.firstElementChild);
     this.timer = new Timer();
     this.cardsField = new CardsField(this.timer, this.pauseOrResumeButton);
     this.congratsModal = new CongratsModal();
     this.element.appendChild(this.timer.element);
     this.element.appendChild(this.cardsField.element);
     this.element.appendChild(this.congratsModal.element);
-    this.element.firstElementChild?.addEventListener('click', this.pauseOrResumeGame)
+    this.element.firstElementChild?.addEventListener('click', this.pauseOrResumeGame);
   }
 
   newGame(images: string[]) {
@@ -63,7 +63,7 @@ export class Game extends BaseComponent {
     (<HTMLElement>e.target).textContent = 'resume game';
     this.isPaused = true;
     this.timer.stop();
-  }
+  };
 
   private cardHandler(card: Card) {
     if (this.isAnimation || this.isPaused) return;

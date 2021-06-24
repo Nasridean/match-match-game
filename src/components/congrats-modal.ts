@@ -1,4 +1,4 @@
-import { BaseComponent } from "./base-component";
+import { BaseComponent } from './base-component';
 
 export class CongratsModal extends BaseComponent {
   constructor() {
@@ -17,11 +17,11 @@ export class CongratsModal extends BaseComponent {
       </div>
     `;
     console.log(this.element.firstElementChild?.lastElementChild);
-    this.element.firstElementChild?.lastElementChild?.addEventListener('click', this.close )
-  }
+    this.element.firstElementChild?.lastElementChild?.addEventListener('click', this.close);
+  };
 
   close = (): void => {
-    window.history.pushState({}, '', '/score')
+    window.history.pushState({}, '', '/score');
     this.element.style.display = 'none';
-  }
+  };
 }

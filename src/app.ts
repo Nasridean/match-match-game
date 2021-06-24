@@ -26,7 +26,6 @@ export class App {
   private gameDifficulty: FormDataEntryValue = '8';
 
   constructor(private readonly rootElement: HTMLElement) {
-    
     this.database = new Database();
     this.database.manageDatabase();
     // this.database.putDataToDatabase('hiii!', '2');
@@ -38,7 +37,7 @@ export class App {
     this.game = new Game();
     this.about = new About();
     this.gameSettings = new GameSettings();
-    this.gameSettings.element.onsubmit = this.saveSettings //console.log(new FormData((<HTMLFormElement> this.gameSettings.element)).get('type'))
+    this.gameSettings.element.onsubmit = this.saveSettings; // console.log(new FormData((<HTMLFormElement> this.gameSettings.element)).get('type'))
     this.rootElement.appendChild(this.header.element);
     this.rootElement.appendChild(this.mainElement);
     this.renderMainContent();
@@ -47,14 +46,14 @@ export class App {
 
   saveSettings = (e: Event) => {
     e.preventDefault();
-    const form = new FormData(<HTMLFormElement>this.gameSettings.element);
+    const form = new FormData(<HTMLFormElement> this.gameSettings.element);
     this.cardType = (<FormDataEntryValue>form.get('type'));
     this.gameDifficulty = (<FormDataEntryValue>form.get('difficulty'));
     this.game = new Game();
     this.start();
-    //window.history.pushState({}, '', '/');
+    // window.history.pushState({}, '', '/');
     window.dispatchEvent(new Event('locationchange'));
-  }
+  };
 
   renderMainContent() {
     this.mainElement.innerHTML = '';
