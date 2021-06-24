@@ -4,7 +4,8 @@ import { Timer } from '../timer';
 
 export class CardsField extends BaseComponent {
   private cards: Card[] = [];
-  private timeout: number = 0;
+
+  private timeout = 0;
 
   constructor(private readonly timer: Timer, private readonly button: HTMLElement) {
     super('div', ['main__cards']);

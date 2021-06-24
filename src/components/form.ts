@@ -4,7 +4,7 @@ import { BaseComponent } from './base-component';
 export class Form extends BaseComponent {
   private readonly reader: FileReader = new FileReader();
 
-  private imgURL: string = '';
+  private imgURL = '';
 
   constructor(private users: User[], private readonly start: () => void) {
     super('div', ['main__container', 'main__container--form']);
@@ -22,18 +22,17 @@ export class Form extends BaseComponent {
     `;
     this.element.firstElementChild?.lastElementChild?.addEventListener('click', this.closeForm);
     this.element.firstElementChild?.addEventListener('submit', this.addUser);
-    this.element.firstElementChild?.children[2].addEventListener('input', this.uploadPicture)
+    this.element.firstElementChild?.children[2].addEventListener('input', this.uploadPicture);
   }
 
   uploadPicture = (e: Event): void => {
     const form: FormData = new FormData((<HTMLFormElement> this.element.firstElementChild));
-    this.reader.onload = (e: ProgressEvent<FileReader>): void => {
-      this.imgURL = (<string>e.target?.result);
+    this.reader.onload = (ev: ProgressEvent<FileReader>): void => {
+      this.imgURL = (<string>ev.target?.result);
       const imgInputLabel: HTMLLabelElement = (<HTMLLabelElement> this.element.firstElementChild?.children[3]);
-      imgInputLabel.style.backgroundImage = `url(${e.target?.result})`;
+      imgInputLabel.style.backgroundImage = `url(${ev.target?.result})`;
     };
     this.reader.readAsDataURL((<Blob>form.get('image-input')));
-
   };
 
   addUser = (e: Event): void => {
@@ -43,29 +42,31 @@ export class Form extends BaseComponent {
     const form: FormData = new FormData(formElement);
     const reader: FileReader = new FileReader();
     const user: User = {
-        id: this.users.length,
-        firstName: (<string>form.get('firstName')),
-        lastName: (<string>form.get('lastName')),
-        email: (<string>form.get('email')),
-        score: 0,
-        avatar: this.imgURL || null
+      id: this.users.length,
+      firstName: (<string>form.get('firstName')),
+      lastName: (<string>form.get('lastName')),
+      email: (<string>form.get('email')),
+      score: 0,
+      avatar: this.imgURL || null,
+    };
+    if (this.reader.readyState === 1) {
+      const push = (ev: Event): void => {
+        this.users.push(user);
+        window.dispatchEvent(new Event('usersupdate'));
+        formElement.reset();
+        window.dispatchEvent(new Event('locationchange'));
+        ev.target?.removeEventListener('load', push);
       };
-      if (this.reader.readyState === 1) {
-        const push = (e: Event): void => {
-          this.users.push(user);
-          formElement.reset();
-          window.dispatchEvent(new Event('locationchange'));
-          e.target?.removeEventListener('load', push)
-        }
-        reader.addEventListener('load', push);
-        return alert('wait until image is loaded');
-      }
-      this.users.push(user);
-      formElement.reset();
-      this.closeForm(e);
-      window.dispatchEvent(new Event('locationchange'));
-      window.dispatchEvent(new Event('usersupdate'));
-      console.log(this.users);
+      reader.addEventListener('load', push);
+      alert('wait until image is loaded');
+      return;
+    }
+    this.users.push(user);
+    formElement.reset();
+    this.closeForm(e);
+    window.dispatchEvent(new Event('locationchange'));
+    window.dispatchEvent(new Event('usersupdate'));
+    console.log(this.users);
   };
 
   closeForm = (e: Event): void => {

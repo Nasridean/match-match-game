@@ -1,5 +1,5 @@
-import { User } from "../models/user";
-import { BaseComponent } from "./base-component";
+import { User } from '../models/user';
+import { BaseComponent } from './base-component';
 
 export class Score extends BaseComponent {
   constructor(private readonly user: User) {
@@ -13,6 +13,6 @@ export class Score extends BaseComponent {
         </p>
       </div>
       <p class="main__score">Score: <span class="main__score-value">${user.score}</span></p>
-    `
+    `;
   }
 }

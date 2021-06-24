@@ -107,7 +107,7 @@ export class Game extends BaseComponent {
       this.users[this.users.length - 1].score = this.score;
       window.dispatchEvent(new Event('usersupdate'));
       this.congratsModal.open([this.score, this.timer.minutes, this.timer.seconds]);
-      console.log(this.users)
+      console.log(this.users);
     }
   }
 }

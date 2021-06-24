@@ -1,6 +1,6 @@
-import { User } from "../models/user";
-import { BaseComponent } from "./base-component";
-import { Score } from "./score";
+import { User } from '../models/user';
+import { BaseComponent } from './base-component';
+import { Score } from './score';
 
 export class Scores extends BaseComponent {
   constructor(private readonly users: User[]) {
@@ -13,9 +13,9 @@ export class Scores extends BaseComponent {
 
   updateScore = () => {
     const users = [...this.users];
-    (<HTMLDivElement>this.element.lastElementChild).innerHTML = ``;
+    (<HTMLDivElement> this.element.lastElementChild).innerHTML = '';
     const scores = users.sort((a, b) => b.score - a.score).map((user) => new Score(user));
     scores.forEach((score) => this.element.lastElementChild?.append(score.element));
     console.log(users, scores, this.users);
-  }
+  };
 }

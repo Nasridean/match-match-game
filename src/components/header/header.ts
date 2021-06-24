@@ -12,7 +12,8 @@ export class Header extends BaseComponent {
   constructor(
     private readonly openForm: (e:Event) => void,
     private readonly start: () => void,
-    private readonly users: User[]) {
+    private readonly users: User[],
+  ) {
     super('header', ['header']);
     this.element.innerHTML = `
     <div class="header__left-side">
@@ -33,9 +34,9 @@ export class Header extends BaseComponent {
       if (window.location.pathname === '/') return;
       document.getElementById(window.location.pathname.slice(1))?.classList.add('header__link-button--active');
     });
-    this.startNewGameButton = (<HTMLButtonElement>this.element.children[1])
-    this.userImageButton = (<HTMLElement>this.element.children[2]);
-    this.registerNewPlayerButton = (<HTMLButtonElement>this.element.lastElementChild);
+    this.startNewGameButton = (<HTMLButtonElement> this.element.children[1]);
+    this.userImageButton = (<HTMLElement> this.element.children[2]);
+    this.registerNewPlayerButton = (<HTMLButtonElement> this.element.lastElementChild);
     this.startNewGameButton.addEventListener('click', this.start);
     this.userImageButton.addEventListener('click', this.openForm);
     this.registerNewPlayerButton.addEventListener('click', this.openForm);
@@ -47,9 +48,8 @@ export class Header extends BaseComponent {
     this.startNewGameButton.style.display = noUser ? 'none' : 'inline-block';
     this.userImageButton.style.display = noUser ? 'none' : 'inline-block';
     this.registerNewPlayerButton.style.display = noUser ? 'inline-block' : 'none';
-    if (!noUser && this.users[this.users.length - 1].avatar)
-    this.userImageButton.style.backgroundImage = `url(${this.users[this.users.length - 1].avatar})`;
-  }
+    if (!noUser && this.users[this.users.length - 1].avatar) this.userImageButton.style.backgroundImage = `url(${this.users[this.users.length - 1].avatar})`;
+  };
 
   private createLinks = (): void => {
     if (this.element.firstElementChild?.lastElementChild) {
@@ -58,5 +58,5 @@ export class Header extends BaseComponent {
       this.element.firstElementChild.lastElementChild.appendChild(new Link(['Best scores', ''], 'score').element);
       this.element.firstElementChild.lastElementChild.appendChild(new Link(['Game settings', ''], 'game-settings').element);
     }
-  }
+  };
 }
