@@ -31,6 +31,7 @@ export class Database {
     /* setTimeout(() => console.log(this.transaction), 1000)
       this.transaction?.objectStore('user').put(data, 'key'); */
   });
+
   putAll = (data: User[]): Promise<void> => new Promise((resolve, reject): void => {
     const open: IDBOpenDBRequest = window.indexedDB.open('Nasridean', 1);
 

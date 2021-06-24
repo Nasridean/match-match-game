@@ -66,7 +66,7 @@ export class App {
     console.log(this.users);
     this.header.adjustButtons();
     this.scores.updateScore();
-    this.database.putAll(this.users)
+    this.database.putAll(this.users);
   };
 
   saveSettings = (e: Event) => {
