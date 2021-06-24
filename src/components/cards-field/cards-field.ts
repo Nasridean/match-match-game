@@ -4,26 +4,22 @@ import { Timer } from '../timer';
 
 export class CardsField extends BaseComponent {
   private cards: Card[] = [];
+  private timeout: number = 0;
 
-  private readonly timer: Timer;
-
-  private readonly button: HTMLElement;
-
-  constructor(timer: Timer, button: HTMLElement) {
+  constructor(private readonly timer: Timer, private readonly button: HTMLElement) {
     super('div', ['main__cards']);
-    this.timer = timer;
-    this.button = button;
   }
 
   clear() {
     this.cards = [];
     this.element.innerHTML = '';
+    window.clearTimeout(this.timeout);
   }
 
   addCards(cards: Card[]) {
     this.cards = cards;
     this.cards.forEach((card) => this.element.appendChild(card.element));
-    setTimeout(() => {
+    this.timeout = window.setTimeout(() => {
       this.cards.forEach((card) => card.flipToBack());
       this.timer.reset();
       this.button.style.display = 'inline-block';

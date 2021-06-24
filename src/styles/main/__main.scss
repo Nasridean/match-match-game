@@ -29,6 +29,7 @@
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
+      z-index: 1;
     }
   }
   &__form {
@@ -69,6 +70,7 @@
     height: 150px;
     border-radius: 50%;
     background: url('icons/avatar.svg');
+    background-size: contain;
     float: right;
     background-position: center;
     position: relative;
@@ -91,7 +93,22 @@
         height: 1em;
         width: 6em;
       }
-    } 
+    }
+    &--header {
+      width: 60px;
+      height: 60px;
+      margin-top: 0;
+      &:hover {
+        &::before {
+          height: 20px;
+          width: 4px;
+        }
+        &::after {
+          height: 4px;
+          width: 20px;
+        }
+      }
+    }
   }
   &__save-button {
     cursor: pointer;
@@ -207,6 +224,8 @@
   }
   &__avatar {
     border-radius: 50%;
+    width: 40px;
+    height: 40px;
   }
   &__credentials {
     display: flex;
@@ -312,6 +331,7 @@
 
   &__flip-card {
     background-color: transparent;
+    cursor: pointer;
     //width: 68px;
     //height: 68px;
     width: 100%;

@@ -1,3 +1,4 @@
+import { User } from '../../models/user';
 import { BaseComponent } from '../base-component';
 import { Card } from '../card/card';
 import { CardsField } from '../cards-field/cards-field';
@@ -25,7 +26,7 @@ export class Game extends BaseComponent {
 
   private readonly pauseOrResumeButton: HTMLElement;
 
-  constructor() {
+  constructor(private users: User[]) {
     super('div', ['main__container', 'main__container--game']);
     this.element.innerHTML = '<button class="main__pause-resume-button" style="display: none">pause game</button>';
     this.pauseOrResumeButton = (<HTMLElement> this.element.firstElementChild);
@@ -39,8 +40,13 @@ export class Game extends BaseComponent {
   }
 
   newGame(images: string[]) {
+    this.score = 0;
+    this.matchCount = 0;
     this.images = images;
+    this.timer.reset();
+    this.timer.start();
     this.cardsField.clear();
+    this.pauseOrResumeButton.style.display = 'none';
     const cards = images
       .concat(images)
       .map((url) => new Card(url))
@@ -49,7 +55,6 @@ export class Game extends BaseComponent {
     cards.forEach(
       (card) => card.element.addEventListener('click', () => this.cardHandler(card)),
     );
-
     this.cardsField.addCards(cards);
   }
 
@@ -99,7 +104,10 @@ export class Game extends BaseComponent {
       this.timer.stop();
       this.score = (this.score * 100) - (this.timer.minutes * 60 + this.timer.seconds) * 10;
       this.score = this.score < 0 ? 0 : this.score;
+      this.users[this.users.length - 1].score = this.score;
+      window.dispatchEvent(new Event('usersupdate'));
       this.congratsModal.open([this.score, this.timer.minutes, this.timer.seconds]);
+      console.log(this.users)
     }
   }
 }

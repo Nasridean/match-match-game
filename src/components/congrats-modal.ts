@@ -22,6 +22,7 @@ export class CongratsModal extends BaseComponent {
 
   close = (): void => {
     window.history.pushState({}, '', '/score');
+    window.dispatchEvent(new Event('locationchange'));
     this.element.style.display = 'none';
   };
 }

@@ -19,6 +19,7 @@ export class Timer extends BaseComponent {
   }
 
   start() {
+    this.stop();
     this.interval = window.setInterval(() => {
       if (this.seconds === 59) {
         this.seconds = 0;

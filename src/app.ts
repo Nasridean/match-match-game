@@ -4,7 +4,10 @@ import { Form } from './components/form';
 import { GameSettings } from './components/game-settings';
 import { Game } from './components/game/game';
 import { Header } from './components/header/header';
+import { Score } from './components/score';
+import { Scores } from './components/scores';
 import { ImageCategoryModel } from './models/image-category-models';
+import { User } from './models/user';
 
 export class App {
   private readonly form: Form;
@@ -23,7 +26,11 @@ export class App {
 
   private cardType: FormDataEntryValue = 'cars';
 
-  private gameDifficulty: FormDataEntryValue = '8';
+  private gameDifficulty: string = '8';
+
+  private users: User[] = [];
+
+  private scores: Scores;
 
   constructor(private readonly rootElement: HTMLElement) {
     this.database = new Database();
@@ -32,31 +39,40 @@ export class App {
     // this.database.putDataToDatabase('hello', '2');
     this.mainElement = document.createElement('main');
     this.mainElement.classList.add('main');
-    this.form = new Form();
-    this.header = new Header(this.form.openForm);
-    this.game = new Game();
+    this.form = new Form(this.users, this.start);
+    this.header = new Header(this.form.openForm, this.start, this.users);
+    this.game = new Game(this.users);
     this.about = new About();
+    this.scores = new Scores(this.users)
     this.gameSettings = new GameSettings();
     this.gameSettings.element.onsubmit = this.saveSettings; // console.log(new FormData((<HTMLFormElement> this.gameSettings.element)).get('type'))
     this.rootElement.appendChild(this.header.element);
     this.rootElement.appendChild(this.mainElement);
     this.renderMainContent();
     window.addEventListener('locationchange', () => this.renderMainContent());
+    window.addEventListener('usersupdate', this.renderAfterUserUpdate)
+  }
+
+  private renderAfterUserUpdate = (e: Event): void => {
+    console.log(this.users);
+    this.header.adjustButtons();
+    this.scores.updateScore();
   }
 
   saveSettings = (e: Event) => {
     e.preventDefault();
     const form = new FormData(<HTMLFormElement> this.gameSettings.element);
     this.cardType = (<FormDataEntryValue>form.get('type'));
-    this.gameDifficulty = (<FormDataEntryValue>form.get('difficulty'));
-    this.game = new Game();
+    this.gameDifficulty = (<string>form.get('difficulty'));
+    console.log(this.gameDifficulty)
+    this.game = new Game(this.users);
     this.start();
-    // window.history.pushState({}, '', '/');
-    window.dispatchEvent(new Event('locationchange'));
   };
 
   renderMainContent() {
     this.mainElement.innerHTML = '';
+    this.mainElement.appendChild(this.form.element);
+    if (this.users.length === 0) return;
     switch (window.location.pathname) {
       case '/about':
         this.mainElement.appendChild(this.about.element);
@@ -66,19 +82,24 @@ export class App {
         this.mainElement.appendChild(this.gameSettings.element);
         window.history.replaceState({}, '', '/');
         break;
+      case '/score':
+        this.mainElement.appendChild(this.scores.element);
+        window.history.replaceState({}, '', '/');
+        break;
       default:
         this.mainElement.appendChild(this.game.element);
         window.history.replaceState({}, '', '/');
         break;
     }
-    this.mainElement.appendChild(this.form.element);
   }
 
-  async start() {
+   start = async () => {
+     console.log('fired')
     const res = await fetch('./images.json');
     const categories: ImageCategoryModel[] = await res.json();
-
-    const images = categories[0].images.map((name) => `${this.cardType}/${name}`);
-    this.game.newGame(images);
+    const images = categories[0].images.slice(0, parseInt(this.gameDifficulty));
+    const mappedImages = images.map((name) => `${this.cardType}/${name}`);
+    this.game.newGame(mappedImages);
+    window.dispatchEvent(new Event('locationchange'));
   }
 }

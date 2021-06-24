@@ -26,11 +26,5 @@ export class GameSettings extends BaseComponent {
       </fieldset>
       <input type="submit" name="submit" value="Save" class="main__save-button">
     `;
-
-    this.element.addEventListener('submit', (e) => {
-      this.form = new FormData((<HTMLFormElement> this.element));
-      e.preventDefault();
-      console.log(this.form.get('type'), this.form.get('difficulty'));
-    });
   }
 }
