@@ -1,0 +1,402 @@
+.main {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 33px;
+  &__container {
+    width: 1000px;
+    height: 882px;
+    border-radius: 5px;
+    background: rgba(0, 0, 0, 0.05);
+    display: flex;
+    flex-direction: column;
+    padding: 28px 56px;
+    position: relative;
+    &--settings {
+      height: 252px;
+      background-color: white;
+      box-shadow: 0px 6px 5px rgba(0, 0, 0, 0.24), 0px 9px 18px rgba(0, 0, 0, 0.18);
+    }
+    &--game {
+      align-items: center;
+    }
+    &--form {
+      width: 100vw;
+      height: 100vh;
+      background-color: rgba(0, 0, 0, 0.5);
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 1;
+    }
+  }
+  &__form {
+    @extend .main__container--settings;
+    width: 639px;
+    height: 460px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    padding: 28px 56px;
+    border-radius: 5px;
+  }
+  &__form-input {
+    background: rgba(33, 33, 33, 0.08);
+    border-radius: 4px 4px 0px 0px;
+    padding: 10px 12px;
+    font-size: 20px;
+    width: 329px;
+    margin-top: 35px;
+    &:valid {
+      background-color: #ddffdd;
+    }
+    &:invalid {
+      background-color: #ffdddd;
+    }
+    &:focus {
+      outline: none;
+    }
+  }
+  &__form-image-input {
+    display:none;
+  };
+  &__form-image-input-label {
+    cursor: pointer;
+    margin-top: 60px;
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    background: url('icons/avatar.svg');
+    background-size: contain;
+    float: right;
+    background-position: center;
+    position: relative;
+    &:hover {
+      background-color: darken($color: white, $amount: 20);
+      &::before, &::after {
+        content: "";
+        display: block;
+        background-color: white;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%,-50%);
+      }
+      &::before {
+        height: 6em;
+        width: 1em;
+      }
+      &::after {
+        height: 1em;
+        width: 6em;
+      }
+    }
+    &--header {
+      width: 60px;
+      height: 60px;
+      margin-top: 0;
+      &:hover {
+        &::before {
+          height: 20px;
+          width: 4px;
+        }
+        &::after {
+          height: 4px;
+          width: 20px;
+        }
+      }
+    }
+  }
+  &__save-button {
+    cursor: pointer;
+    width: 80px;
+    text-transform: uppercase;
+    background: #2196F3;
+    border: none;
+    color: rgba(255,255,255, .7);
+    padding: 6px;
+    border-radius: 3px;
+    font-weight: 500;
+    box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.12), 0px 2px 2px rgba(0, 0, 0, 0.24);
+    &:hover {
+      color: rgba(255,255,255, 1);
+    }
+    &:active {
+      color: rgba(255,255,255, 1);
+      background-color: darken($color: $primary, $amount: 5);
+    }
+  }
+  &__add-user-button {
+    @extend .main__save-button;
+    position: absolute;
+    bottom: 30px;
+    right: 129px;
+    height: 35px;
+  }
+  &__cancel-button {
+    @extend .main__add-user-button;
+    right: 29px;
+    background: #E3F2FD;
+    color: rgba(33, 150, 243);
+    &:hover {
+      color: rgb(33, 100, 243);
+    }
+  }
+  &__congrats-modal {
+    @extend .main__form;
+    width: 360px;
+    height: 112px;
+    font-size: 14px;
+    line-height: 20px;
+    letter-spacing: 0.25px;
+    color: rgba(0, 0, 0, 0.6);
+    padding: 12px 52px;
+  }
+  &__close-modal-button {
+    @extend .main__save-button;
+    display: block;
+    margin: auto;
+  }
+  &__pause-resume-button {
+    @extend .main__save-button;
+    width: 142px;
+    font-size: 16px;
+    font-weight: 600;
+    position: absolute;
+    right: 20px;
+    height: 48px;
+    letter-spacing: 5px;
+  }
+  &__select-block {
+    border: none;
+    padding: 0;
+    border-bottom: 1px solid rgba(33, 33, 33, 0.08);
+    width: 256px;
+    margin-bottom: 29px;
+    position: relative;
+    &::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 0;
+      border-left: 5px solid transparent;
+      border-right: 5px solid transparent;
+      border-top: 5px solid rgba(0, 0, 0, 0.54);
+      right: 20px;
+      top: 20px;
+      pointer-events: none;
+    }
+  }
+  &__select {
+    appearance: none;
+    background-color: white;
+    border: none;
+    opacity: .6;
+    margin-left: -3px;
+    padding-top: 7px;
+    width: 100%;
+    padding-bottom: 17px;
+  }
+  &__title {
+    opacity: .87;
+    font-size: 20px;
+    font-weight: 500;
+    margin: 0;
+  }
+  &__players {
+    margin-top: 28px;
+  }
+  &__player {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 846px;
+    border-bottom: 1px solid rgba(33, 33, 33, 0.08);
+    padding-bottom: 5px;
+    padding-right: 14px;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: .15px;
+    margin-bottom: 18px;
+  }
+  &__avatar {
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+  }
+  &__credentials {
+    display: flex;
+    align-items: center;
+  }
+  &__text-credentials {
+    display: inline-block;
+    padding-left: 16px;
+    margin: 0;
+    color: #333;
+  }
+  &__email {
+    font-weight: normal;
+    font-size: 12px;
+    letter-spacing: .4px;
+    line-height: 20px;
+  }
+  &__score {
+    margin: 0;
+    opacity: .87;
+  }
+  &__score-value {
+    color: $primary;
+  }
+  &__block{
+    width: 786px;
+    display: flex;
+    justify-content: space-between;
+    &--1 {
+      height: 230px;
+      margin: 16px 0;
+    }
+    &--2 {
+      height: 132px;
+      margin-bottom: 21px;
+    }
+    &--3 {
+      height: 240px;
+    }
+  }
+  &__text {
+    height: 100%;
+    background-color: white;
+    width: 360px;
+    padding: 16px;
+    padding-left: 72px;
+    font-weight: 400px;
+    font-size: 14px;
+    color: rgba(0, 0, 0, 0.6);
+    position: relative;
+    &::before {
+      content: "1";
+      display: inline-block;
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      background-color: $primary;
+      border-radius: 50%;
+      text-align: center;
+      font-size: 24px;
+      color: white;
+      line-height: 37px;
+      left: 16px;
+    }
+    &--configure::before {
+      content: "2";
+    }
+    &--start::before {
+      content: "3";
+    }
+  }
+  &__img {
+    &--settings {
+      width: 116px;
+      height: 73px;
+    }
+  }
+  &__time {
+    width: 256px;
+    height: 64px;
+    background-color: white;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.24);
+    display: flex;
+    font-weight: 500;
+    letter-spacing: 0.15px;
+    color: rgba(0, 0, 0, 0.4);
+    font-size: 36px;
+  }
+  &__time-value {
+    margin: auto;
+  }
+  &__cards {
+    display: grid;
+    //justify-content: space-between;
+    //align-content: space-between;
+    //flex-wrap: wrap;
+    gap: 4px;
+    //grid-template-columns: repeat(4, 1fr);
+    width: 650px;
+    height: 650px;
+    margin-top: 18px;
+  }
+
+  &__flip-card {
+    background-color: transparent;
+    cursor: pointer;
+    //width: 68px;
+    //height: 68px;
+    width: 100%;
+    perspective: 1000px;
+    transform-style: preserve-3d;
+    transition: transform 0.6s;
+    &::after {
+      content: '';
+      padding-bottom: 100%;
+    }
+    &--flipped {
+      transform: rotateY(180deg);
+    }
+    &--correct {
+      position: relative;
+      &::before {
+        content: '';
+        width: 100%;
+        height: 100%;
+        background: rgba(10, 207, 131, 0.5);
+        z-index: 1;
+        position: absolute
+      }
+      &::after {
+        content: '';
+        width: 20px;
+        height: 20px;
+        background-image: url('icons/correct.svg');
+        position: absolute;
+        z-index: 1;
+        right: 5%;
+        top: 5%;
+        background-repeat: no-repeat;
+      }
+
+    }
+    &--incorrect {
+      @extend .main__flip-card--correct;
+      &::before {
+        background: rgba(242, 78, 30, 0.5);
+      }
+      &::after {
+        background-image: url('icons/incorrect.svg');
+      }
+    }
+  }
+  
+  &__flip-card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  }
+  
+  &__flip-card-side {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    border-radius: 4px;
+    object-fit: cover;
+    &--back {
+      transform: rotateY(180deg);
+    }
+  }
+}

@@ -1,0 +1,331 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap");
+* {
+  box-sizing: border-box;
+  font-family: "Roboto";
+}
+
+body {
+  margin: 0;
+}
+
+.header {
+  background-color: #2196F3;
+  width: 100%;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+}
+.header__links {
+  width: 288px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+.header__link {
+  height: 100%;
+  width: 96px;
+}
+.header__link-button {
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  background-color: #2196F3;
+  border: none;
+  color: white;
+  font-weight: 500;
+  opacity: 0.7;
+  font-size: 12px;
+  text-decoration: none;
+}
+.header__icon {
+  display: block;
+  width: 20px;
+  height: 20px;
+  background-color: white;
+  border-radius: 50%;
+  font-style: normal;
+  color: #2196F3;
+  text-align: center;
+}
+.header__icon--about {
+  font-weight: 700;
+  font-size: 16px;
+}
+.header__icon--score {
+  background-image: url("icons/score.svg");
+  background-color: transparent;
+  background-size: contain;
+}
+.header__icon--game-settings {
+  background-image: url("icons/settings.svg");
+  background-position: center;
+  background-repeat: no-repeat;
+}
+.header__button {
+  border: none;
+  padding: 10px 16px;
+  height: 36px;
+  background-color: #F2F9FE;
+  box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.2), 0px 1px 18px rgba(0, 0, 0, 0.12), 0px 6px 10px rgba(0, 0, 0, 0.14);
+  border-radius: 4px;
+  font-weight: 500;
+  font-size: 14px;
+  letter-spacing: 1.25px;
+  color: #2196F3;
+  text-transform: uppercase;
+}
+.header__left-side {
+  display: flex;
+  height: 100%;
+  align-items: center;
+  justify-content: space-between;
+  width: 544px;
+}
+.header__logo p {
+  margin: 2px;
+  color: white;
+  width: 80px;
+  text-align: center;
+  text-transform: uppercase;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 1.25px;
+}
+.header__logo p:last-of-type {
+  background-color: white;
+  color: #2196F3;
+  box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.2);
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.active {
+  opacity: 1;
+  background-color: #0d8aee;
+}
+
+.main {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 33px;
+}
+.main__container {
+  width: 1000px;
+  height: 802px;
+  border-radius: 5px;
+  background: rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+  padding: 28px 56px;
+}
+.main__container--settings {
+  height: 252px;
+  background-color: white;
+  box-shadow: 0px 6px 5px rgba(0, 0, 0, 0.24), 0px 9px 18px rgba(0, 0, 0, 0.18);
+}
+.main__container--game {
+  align-items: center;
+}
+.main__select-block {
+  border-bottom: 1px solid rgba(33, 33, 33, 0.08);
+  width: 256px;
+  margin-bottom: 37px;
+  position: relative;
+}
+.main__select-block::after {
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 5px solid rgba(0, 0, 0, 0.54);
+  right: 20px;
+  top: 40px;
+}
+.main__select {
+  appearance: none;
+  background-color: white;
+  border: none;
+  opacity: 0.6;
+  margin-left: -3px;
+  padding-top: 7px;
+  width: 100%;
+  padding-bottom: 17px;
+}
+.main__title {
+  opacity: 0.87;
+  font-size: 20px;
+  font-weight: 500;
+  margin: 0;
+}
+.main__players {
+  margin-top: 28px;
+}
+.main__player {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 846px;
+  border-bottom: 1px solid rgba(33, 33, 33, 0.08);
+  padding-bottom: 5px;
+  padding-right: 14px;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.15px;
+  margin-bottom: 18px;
+}
+.main__avatar {
+  border-radius: 50%;
+}
+.main__credentials {
+  display: flex;
+  align-items: center;
+}
+.main__text-credentials {
+  display: inline-block;
+  padding-left: 16px;
+  margin: 0;
+  color: #333;
+}
+.main__email {
+  font-weight: normal;
+  font-size: 12px;
+  letter-spacing: 0.4px;
+  line-height: 20px;
+}
+.main__score {
+  margin: 0;
+  opacity: 0.87;
+}
+.main__score-value {
+  color: #2196F3;
+}
+.main__block {
+  width: 786px;
+  display: flex;
+  justify-content: space-between;
+}
+.main__block--1 {
+  height: 230px;
+  margin: 16px 0;
+}
+.main__block--2 {
+  height: 132px;
+  margin-bottom: 21px;
+}
+.main__block--3 {
+  height: 240px;
+}
+.main__text {
+  height: 100%;
+  background-color: white;
+  width: 360px;
+  padding: 16px;
+  padding-left: 72px;
+  font-weight: 400px;
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.6);
+  position: relative;
+}
+.main__text::before {
+  content: "1";
+  display: inline-block;
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  background-color: #2196F3;
+  border-radius: 50%;
+  text-align: center;
+  font-size: 24px;
+  color: white;
+  line-height: 37px;
+  left: 16px;
+}
+.main__text--configure::before {
+  content: "2";
+}
+.main__text--start::before {
+  content: "3";
+}
+.main__img--settings {
+  width: 116px;
+  height: 73px;
+}
+.main__time {
+  width: 256px;
+  height: 64px;
+  background-color: white;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.24);
+  display: flex;
+  font-weight: 500;
+  letter-spacing: 0.15px;
+  color: rgba(0, 0, 0, 0.4);
+  font-size: 36px;
+}
+.main__time-value {
+  margin: auto;
+}
+.main__cards {
+  display: flex;
+  justify-content: space-between;
+  align-content: space-between;
+  flex-wrap: wrap;
+  width: 744px;
+  height: 532px;
+  margin-top: 60px;
+}
+.main__card {
+  box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.2), 0px 3px 4px rgba(0, 0, 0, 0.12), 0px 2px 4px rgba(0, 0, 0, 0.14);
+  border-radius: 4px;
+  width: 168px;
+  height: 168px;
+  object-fit: none;
+  position: relative;
+}
+.main__card--correct::before {
+  content: "";
+  width: inherit;
+  height: inherit;
+  background: rgba(10, 207, 131, 0.5);
+  z-index: 1;
+  position: absolute;
+}
+
+.correct {
+  position: relative;
+}
+.correct::before {
+  content: "";
+  width: 168px;
+  height: 168px;
+  background: rgba(10, 207, 131, 0.5);
+  z-index: 1;
+  position: absolute;
+}
+.correct::after {
+  content: "";
+  width: 20px;
+  height: 20px;
+  background-image: url("icons/correct.svg");
+  position: absolute;
+  z-index: 1;
+  right: 10px;
+  top: 10px;
+}
+.correct .result--incorrect::before {
+  background: red;
+}
+.correct .result--incorrect::after {
+  background-image: url("icons/incorrect.svg");
+}
+
+/*# sourceMappingURL=styles.css.map */
